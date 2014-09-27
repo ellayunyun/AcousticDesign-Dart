@@ -1,4 +1,10 @@
 {
+  "panel": {
+    "min_width": 50,
+    "max_width": 500,
+    "min_height": 50,
+    "max_height": 500
+  },
   "panels": {
     "Medium Panel": {
       "width": 150,

@@ -10,6 +10,7 @@ class Editor
 	DivElement					_leftContainer;
 	Panel						_movingPanel;
 	Panel						_movingImage;
+	Panel						_resizingPanel;
 	List<Panel>					_panels;
 	String						_patternName;
 	Map<String, dynamic>		_config;
@@ -32,14 +33,13 @@ class Editor
 		_groups = new List<Group>();
 		
 		/*
-		 * */
 		_template.showPatternSelection(buttonAction: (String patternName) {
 			_patternName = patternName;
 			_template.showEditor(
 				callback: _configureTemplate
 			);
 		});
-		/*
+		
 		*/
 		
 		document
@@ -49,12 +49,12 @@ class Editor
 		
 
 		// skipping
-		/*
-		_patternName = 'diptych';
+		_patternName = 'monoptych';
 		_template.showEditor(
 			callback: _configureTemplate
 		);
-		*/
+		//
+		
 	}
 	
 	Panel	_addPanel(Map<String, dynamic> config)
@@ -86,6 +86,7 @@ class Editor
 	{
 		_movingPanel = null;
 		_movingImage = null;
+		_resizingPanel = null;
 	}
 	
 	void	_onMouseMove(MouseEvent e)
@@ -103,6 +104,8 @@ class Editor
 				_movingImage.moveImage(e.movement);
 			else
 				moveGroupImage(_movingImage.group, e.movement);
+		} else if (_resizingPanel != null) {
+			_resizingPanel.resizeBy(e.movement);
 		}
 	}
 	
@@ -197,8 +200,11 @@ class Editor
 
 	get		scale						=> _scale;
 	get		scaleDelta					=> _scaleDelta;
+	get		config						=> _config;
 	
 	set		movingPanel(movingPanel)	=> _movingPanel = movingPanel;
 	
 	set		movingImage(movingImage)	=> _movingImage = movingImage;
+	
+	set		resizingPanel(resizingPanel)	=> _resizingPanel = resizingPanel;
 }

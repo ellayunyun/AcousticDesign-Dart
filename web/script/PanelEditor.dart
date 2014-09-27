@@ -79,19 +79,19 @@ class PanelEditor
             ..onLoad.listen((_) {
                 _backgroundImage = new ImageElement(src: reader.result);
                 /*
-                */_configureBackground();
-                /*
+                _configureBackground();
+                
                 */
                 
                 // skipping
-				/*
+				
 		    	new Editor(
 		    		template: _template,
 					scale: 1.64506838763621,
 					background: _backgroundImage,
 					config: _config
 				);
-				* */
+				
             }
         );
         

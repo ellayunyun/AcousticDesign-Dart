@@ -112,7 +112,9 @@ class Template
 		;
     	
     	if (callback != null)
-    		callback(leftContainer: leftContainer);
+    		callback(
+				leftContainer: leftContainer
+			);
     }
     
     void	showPatternSelection({ buttonAction }) {

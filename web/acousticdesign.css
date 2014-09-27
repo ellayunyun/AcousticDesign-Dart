@@ -69,6 +69,7 @@ h1, p {
 	position: absolute;
 	top: 10px;
 	left: 10px;
+	box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.15);
 }
 
 #editor .panel-wrapper .move {
@@ -82,6 +83,18 @@ h1, p {
 	z-index: 5;
 }
 
+#editor .panel-wrapper .resize {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 20px;
+	height: 20px;
+	background-color: #ffffff;
+	cursor: nwse-resize;
+	z-index: 5;
+	text-align: center;
+}
+
 #editor .panel-wrapper .solo {
 	position: absolute;
 	top: 0;
@@ -91,6 +104,7 @@ h1, p {
 	background-color: #ffffff;
 	cursor: move;
 	z-index: 5;
+	text-align: center;
 }
 
 #editor .panel-wrapper .solo.active {
@@ -112,9 +126,23 @@ h1, p {
 #editor .panel-wrapper .panel {
 	cursor: crosshair;
 	z-index: 4;
+}
+
+#editor .panel-wrapper .dimension-width {
 	position: absolute;
-	top: 0;
+	width: 100%;
+	top: -20px;
 	left: 0;
+	text-align: center;
+}
+
+#editor .panel-wrapper .dimension-height {
+	position: absolute;
+	top: 50%;
+	text-align: center;
+	-ms-transform: rotate(-90deg); /* IE 9 */
+    -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+    transform: rotate(-90deg);
 }
 
 .gallery {

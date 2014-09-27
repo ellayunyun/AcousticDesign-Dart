@@ -11,6 +11,9 @@ class Panel
 	DivElement					_moveButton;
 	DivElement					_soloButton;
 	DivElement					_backgroundButton;
+	DivElement					_resizeButton;
+	DivElement					_widthDimension;
+	DivElement					_heightDimension;
 	Point						_imagePosition;
 	double						_scale;
 	double						_imageScale;
@@ -75,6 +78,23 @@ class Panel
 			..className = 'background'
 			..text = 'B'
 		;
+		
+		_resizeButton = new DivElement()
+			..className = 'resize'
+			..text = 'R'
+		;
+		
+		_widthDimension = new DivElement()
+			..className = 'dimension-width'
+			..text = _width.toString() +' cm'
+		;
+		
+		_heightDimension = new DivElement()
+			..className = 'dimension-height'
+			..text = _height.toString() +' cm'
+		;
+		
+		
     	
     	_panelWrapper = new DivElement()
     		..className = 'panel-wrapper'
@@ -82,6 +102,9 @@ class Panel
     		..append(_moveButton)
     		..append(_backgroundButton)
     		..append(_soloButton)
+    		..append(_resizeButton)
+    		..append(_widthDimension)
+    		..append(_heightDimension)
 		;
 
     	_container.append(_panelWrapper);
@@ -89,6 +112,11 @@ class Panel
 		_panel
 			..width = (_width * _editor.scale).toInt()
 			..height = (_height * _editor.scale).toInt()
+		;
+		
+		_heightDimension.style
+			..width = _panel.height.toString() +'px'
+			..left = (-_panel.width / 2 - 10).toString() +'px'
 		;
     	
     	moveBy(0, 0);
@@ -109,6 +137,12 @@ class Panel
     	_backgroundButton.onClick.listen((_) => _editor.changeBackground(this));
     	
     	_soloButton.onClick.listen((_) => toggleSolo());
+    	
+    	_resizeButton
+	    	..onMouseDown.listen((_) {
+	    		_editor.resizingPanel = this;
+	    	})
+    	;
 
 		_panel
 			..onMouseDown.listen((_) => _editor.movingImage = this)
@@ -119,6 +153,32 @@ class Panel
 					_editor.scaleGroupImages(_group, e);
 			})
 		;
+	}
+	
+	void	resizeBy(Point delta)
+	{
+		int						newWidth;
+		int						newHeight;
+		int						realWidth;
+		int						realHeight;
+		Map<String, dynamic>	config;
+		
+		config = _editor.config['panel'];
+		
+		newWidth = _panel.width + delta.x;
+		newHeight = _panel.height + delta.y;
+		
+		realWidth = newWidth ~/ _scale;
+		realHeight = newHeight ~/ _scale;
+		
+		if (realWidth >= config['min_width'] && realWidth <= config["max_width"])
+			_panel.width = newWidth;
+		
+		if (realHeight >= config['min_height'] && realHeight <= config["max_height"])
+			_panel.height = newHeight;
+		
+		_widthDimension.text = realWidth.toString() +' cm';
+		_heightDimension.text = realHeight.toString() +' cm';
 	}
 	
 	void	toggleSolo()

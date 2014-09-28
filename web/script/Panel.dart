@@ -171,10 +171,14 @@ class Panel
 		realWidth = newWidth ~/ _scale;
 		realHeight = newHeight ~/ _scale;
 		
-		if (realWidth >= config['min_width'] && realWidth <= config["max_width"])
+		if (realWidth >= config['min_width']
+		  && realWidth <= config["max_width"]
+		  && int.parse(_panelWrapper.style.left.replaceAll('px', '')) + newWidth < _editor.leftContainer.clientWidth)
 			_panel.width = newWidth;
 		
-		if (realHeight >= config['min_height'] && realHeight <= config["max_height"])
+		if (realHeight >= config['min_height']
+			&& realHeight <= config["max_height"]
+		  	&& int.parse(_panelWrapper.style.top.replaceAll('px', '')) + newHeight < _editor.leftContainer.clientHeight)
 			_panel.height = newHeight;
 		
 		_widthDimension.text = realWidth.toString() +' cm';

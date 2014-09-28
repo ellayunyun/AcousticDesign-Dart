@@ -201,6 +201,7 @@ class Editor
 	get		scale						=> _scale;
 	get		scaleDelta					=> _scaleDelta;
 	get		config						=> _config;
+	get		leftContainer				=> _leftContainer;
 	
 	set		movingPanel(movingPanel)	=> _movingPanel = movingPanel;
 	

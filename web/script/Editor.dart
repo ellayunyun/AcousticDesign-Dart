@@ -100,7 +100,7 @@ class Editor
 				moveGroup(_movingPanel.group, e.movement);
 		} else if (_movingImage != null) {
 			if (_movingImage.solo)
-				_movingImage.moveImage(e.movement);
+				_movingImage.moveImageBy(e.movement);
 			else
 				moveGroupImage(_movingImage.group, e.movement);
 		} else if (_resizingPanel != null) {
@@ -125,7 +125,7 @@ class Editor
 	void	moveGroupImage(Group group, Point delta)
 	{
 		group.panels.forEach((Panel panel) {
-			panel.moveImage(delta);
+			panel.moveImageBy(delta);
 		});
 	}
 	

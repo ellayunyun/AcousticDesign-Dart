@@ -55,8 +55,6 @@ class Panel
 		_solo = false;
 
 		_build();
-		
-		print(_imagePosition.x);
 	}
 	
 	void		_build()
@@ -124,7 +122,7 @@ class Panel
 		;
     	
     	moveBy(0, 0);
-    	moveImage(new Point(0, 0));
+    	moveImageBy(new Point(0, 0));
     	
     	_bind();
 
@@ -187,6 +185,8 @@ class Panel
 		
 		_widthDimension.text = realWidth.toString() +' cm';
 		_heightDimension.text = realHeight.toString() +' cm';
+		
+		centerImage();
 	}
 	
 	void	toggleSolo()
@@ -195,13 +195,26 @@ class Panel
 		_soloButton.classes.toggle('active');
 	}
 	
+	void	centerImage()
+	{
+		int		x;
+		int		y;
+		_imageScale = 1.0;
+		x = (_panel.width ~/ 2) * _imageScale.toInt() - _image.width ~/ 2;
+		y = (_panel.height ~/ 2) * _imageScale.toInt() - _image.height ~/ 2;
+		
+		_imagePosition = new Point(x, y);
+		moveImageBy(new Point(0, 0));
+	}
+	
 	void	scaleImage(WheelEvent e)
 	{
 		double	newScale;
 
 		newScale = (e.deltaY < 0)
 			? _imageScale + _editor.scaleDelta
-			: _imageScale - _editor.scaleDelta;
+			: _imageScale - _editor.scaleDelta
+		;
 
 		/*
 		if (_image.width * newScale < _panel.width
@@ -211,7 +224,7 @@ class Panel
 		
 		_imageScale = newScale;
 		
-		moveImage(new Point(0, 0));
+		moveImageBy(new Point(0, 0));
 	}
 	
 	void	centerPosition()
@@ -222,17 +235,18 @@ class Panel
         );
 	}
 	
-	void	moveImage(Point delta)
+	void	moveImageBy(Point delta)
 	{
 		int	x;
 		int	y;
 
-		x = (_imagePosition.x + delta.x / _imageScale).toInt();
-		y = (_imagePosition.y + delta.y / _imageScale).toInt();
+		x = (_imagePosition.x + delta.x).toInt();
+		y = (_imagePosition.y + delta.y).toInt();
 		
+		/*
 		x = Math.min(x, 0);
 		y = Math.min(y, 0);
-		
+		*/
 		/*
 		print(x);
 		print(_image.width);
@@ -291,12 +305,12 @@ class Panel
 			..fillRect(0, 0, _panel.width, _panel.height)
 			..drawImageScaledFromSource(
         		_image, // Source
-        		-_imagePosition.x * _imageScale, // Source X
-        		-_imagePosition.y * _imageScale, // Source Y        		
+        		0, // Source X
+        		0, // Source Y        		
         		_image.width, // Source width
         		_image.height, // Source height
-        		0, // Destination X
-        		0, // Destination Y
+        		_imagePosition.x, // Destination X
+        		_imagePosition.y, // Destination Y
         		_image.width * _imageScale, // Destination width
         		_image.height * _imageScale // Destination height
         	)

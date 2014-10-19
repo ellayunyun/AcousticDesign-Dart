@@ -122,13 +122,13 @@ class Panel
 		;
     	
     	moveBy(0, 0);
-    	moveImageBy(new Point(0, 0));
     	
     	_bind();
 
 		_ctx = _panel.getContext('2d');
 		
 		centerPosition();
+    	moveImageBy(new Point(0, 0));
 	}
 	
 	void	_bind()
@@ -149,7 +149,7 @@ class Panel
     	;
 
 		_panel
-			..onMouseDown.listen((_) => _editor.movingImage = this)
+			// ..onMouseDown.listen((_) => _editor.movingImage = this)
 			..onMouseWheel.listen((WheelEvent e) {
 				if (_solo)
 					scaleImage(e);
@@ -216,6 +216,8 @@ class Panel
 			? _imageScale + _editor.scaleDelta
 			: _imageScale - _editor.scaleDelta
 		;
+		
+		newScale = Math.max(newScale, 0.1);
 
 		/*
 		if (_image.width * newScale < _panel.width

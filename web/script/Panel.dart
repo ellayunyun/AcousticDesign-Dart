@@ -127,6 +127,8 @@ class Panel
     	_bind();
 
 		_ctx = _panel.getContext('2d');
+		
+		centerPosition();
 	}
 	
 	void	_bind()
@@ -199,12 +201,11 @@ class Panel
 	{
 		int		x;
 		int		y;
-		_imageScale = 1.0;
-		x = (_panel.width ~/ 2) * _imageScale.toInt() - _image.width ~/ 2;
-		y = (_panel.height ~/ 2) * _imageScale.toInt() - _image.height ~/ 2;
+
+		x = _panel.width ~/ 2 - (_image.width * _imageScale) ~/ 2;
+		y = _panel.height ~/ 2 - (_image.height * _imageScale) ~/ 2;
 		
 		_imagePosition = new Point(x, y);
-		moveImageBy(new Point(0, 0));
 	}
 	
 	void	scaleImage(WheelEvent e)
@@ -224,7 +225,7 @@ class Panel
 		
 		_imageScale = newScale;
 		
-		moveImageBy(new Point(0, 0));
+		centerImage();
 	}
 	
 	void	centerPosition()
